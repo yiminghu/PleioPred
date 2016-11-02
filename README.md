@@ -20,11 +20,11 @@ Besides these, you also need to have [LDSC](https://github.com/bulik/ldsc) insta
 ## Setup and Usage Example
 1) Clone this repository
 ```
-git clone https://github.com/yiminghu/AnnoPred.git
+git clone https://github.com/yiminghu/PleioPred.git
 ```
 2) Download reference data
 ```
-cd AnnoPred
+cd PleioPred
 wget http://genocanyon.med.yale.edu/AnnoPredFiles/AnnoPred_ref.tar.gz
 tar -zxvf AnnoPred_ref.tar.gz
 ```
