@@ -122,7 +122,10 @@ pleiopred_genomewide(data_file_D1, data_file_D2, rho, ld_radius = None, ld_dict=
 """
 
 
-def pleiopred_genomewide(data_file_D1, data_file_D2, rho, alpha, Pi, init_betas_prefix, ld_radius = None, ld_dict=None, out_file_prefix=None, n1=None, n2=None, PRF=None, num_iter=60, burn_in=10, zero_jump_prob=0.05, user_h1=None, user_h2=None):
+def pleiopred_genomewide(data_file_D1, data_file_D2, alpha, Pi, init_betas_prefix, ld_radius = None, ld_dict=None, out_file_prefix=None, n1=None, n2=None, PRF=None, num_iter=60, burn_in=10, zero_jump_prob=0.05, user_h1=None, user_h2=None):
+    """
+    Calculate LDpred for a genome
+    """    
     prf_chr = PRF['chrom']
     prf_sids = PRF['sids']
     h2_D1 = PRF['h2_D1']
@@ -289,7 +292,7 @@ def pleiopred_genomewide(data_file_D1, data_file_D2, rho, alpha, Pi, init_betas_
         f = gzip.open(init_betas_path, 'wb')
         cPickle.dump(init_betas, f, protocol=2)
         f.close()
-        print 'Initial betas for mcmc pickled at %s'%init_betas_path
+        print 'LD information is now pickled at %s'%init_betas_path
     else:    
         print 'Loading initial values for mcmc from file: %s'%init_betas_path
         f = gzip.open(init_betas_path, 'r')
@@ -319,10 +322,9 @@ def pleiopred_genomewide(data_file_D1, data_file_D2, rho, alpha, Pi, init_betas_
         A4 = 0    
         for chrom_str in chromosomes_list:
             if chrom_str in chr_list:
-                posterior_betas = post_betas.bi_rho_all_chr(
+                posterior_betas = post_betas.bi_mcmc_all_chr(
                     chrom_betas1[chrom_str],
                     chrom_betas2[chrom_str], 
-                    rho = rho,
                     Pi=Pi,
                     pr_sig1=pr_sig1[chrom_str],
                     pr_sig2=pr_sig2[chrom_str], 
@@ -355,7 +357,7 @@ def pleiopred_genomewide(data_file_D1, data_file_D2, rho, alpha, Pi, init_betas_
     
 ## prs and auc ##
     avg_PV = avg_PV/float(num_iter-burn_in)
-    print 'Posterior PV: ('+str(avg_PV[0])+', '+str(avg_PV[1])+', '+str(avg_PV[2])+', '+str(avg_PV[3])+')'
+    print 'Initial PV: ('+str(avg_PV[0])+', '+str(avg_PV[1])+', '+str(avg_PV[2])+', '+str(avg_PV[3])+')'
     sp.savetxt('%s_Avg_PV'%(out_file_prefix)+'.txt',avg_PV)
 
     for chrom_str in chromosomes_list:
@@ -391,34 +393,34 @@ def pleiopred_genomewide(data_file_D1, data_file_D2, rho, alpha, Pi, init_betas_
     ff_inf.writelines(out1)
     ff_inf.close()
 
-#    corr_inf2 = sp.corrcoef(y2, prs_D2)[0, 1]
-#    r2_inf2 = corr_inf2 ** 2
-#    #results_dict[p_str]['r2_pd']=r2_inf
-#    print 'D2: the R2 prediction accuracy (observed scale) of PleioPred was: %0.4f (%0.6f)' % (r2_inf2, ((1-r2_inf2)**2)/num_individs2)
-#    out2.append('D2: the R2 prediction accuracy (observed scale) of PleioPred was: '+str(r2_inf2)+' ('+str(((1-r2_inf2)**2)/num_individs2)+')\n')
-#    
-#    if corr_inf2<0:
-#        prs_D2 = -1* prs_D2
-#    auc2 = pred_accuracy(y2,prs_D2)
-#    print 'D2: PleioPred AUC for the whole genome was: %0.4f'%auc2
-#    out2.append('D2: PleioPred AUC for the whole genome was: '+str(auc2)+'\n')
-#    out2.append('D2: PleioPred COR for the whole genome was: '+str(corr_inf2)+'\n')
-#
-#    sp.savetxt('%s_y_'%(out_file_prefix)+'_D2.txt',y2)
-#    sp.savetxt('%s_prs'%(out_file_prefix)+'_PleioPred_D2.txt',prs_D2)
+    corr_inf2 = sp.corrcoef(y2, prs_D2)[0, 1]
+    r2_inf2 = corr_inf2 ** 2
+    #results_dict[p_str]['r2_pd']=r2_inf
+    print 'D2: the R2 prediction accuracy (observed scale) of PleioPred was: %0.4f (%0.6f)' % (r2_inf2, ((1-r2_inf2)**2)/num_individs2)
+    out2.append('D2: the R2 prediction accuracy (observed scale) of PleioPred was: '+str(r2_inf2)+' ('+str(((1-r2_inf2)**2)/num_individs2)+')\n')
+    
+    if corr_inf2<0:
+        prs_D2 = -1* prs_D2
+    auc2 = pred_accuracy(y2,prs_D2)
+    print 'D2: PleioPred AUC for the whole genome was: %0.4f'%auc2
+    out2.append('D2: PleioPred AUC for the whole genome was: '+str(auc2)+'\n')
+    out2.append('D2: PleioPred COR for the whole genome was: '+str(corr_inf2)+'\n')
 
-#    #Now calibration                               
-#    ff_inf = open('%s_auc_'%(out_file_prefix)+'_PleioPred_D2.txt',"w")
-#    ff_inf.writelines(out2)
-#    ff_inf.close()
+    sp.savetxt('%s_y_'%(out_file_prefix)+'_D2.txt',y2)
+    sp.savetxt('%s_prs'%(out_file_prefix)+'_PleioPred_D2.txt',prs_D2)
+
+    #Now calibration                               
+    ff_inf = open('%s_auc_'%(out_file_prefix)+'_PleioPred_D2.txt',"w")
+    ff_inf.writelines(out2)
+    ff_inf.close()
 
     f = gzip.open('%s_betas'%(out_file_prefix)+'_PleioPred_D1.pickled.gz', 'wb')
     cPickle.dump(avg_betas1, f, protocol=2)
     f.close()
 
-#    f = gzip.open('%s_betas'%(out_file_prefix)+'_PleioPred_D2.pickled.gz', 'wb')
-#    cPickle.dump(avg_betas2, f, protocol=2)
-#    f.close()
+    f = gzip.open('%s_betas'%(out_file_prefix)+'_PleioPred_D2.pickled.gz', 'wb')
+    cPickle.dump(avg_betas2, f, protocol=2)
+    f.close()
 
 
 """
@@ -510,7 +512,7 @@ def main(p_dict):
             snps1 = sp.array((raw_snps1 - snp_means1)/snp_stds1,dtype='float32')
             assert snps1.shape==raw_snps1.shape, 'Array Shape mismatch'
             chrom_snps1[chrom_str] = snps1
-            ret_dict1 = get_ld_tables(snps1, ld_radius=p_dict['ld_radius'], ld_window_size=2*p_dict['ld_radius'])
+            ret_dict1 = get_LDpred_ld_tables(snps1, ld_radius=p_dict['ld_radius'], ld_window_size=2*p_dict['ld_radius'])
             chrom_ld_dict1[chrom_str] = ret_dict1['ld_dict']
             chrom_ref_ld_mats1[chrom_str] = ret_dict1['ref_ld_matrices']
             ld_scores1 = ret_dict1['ld_scores']
@@ -542,6 +544,8 @@ def main(p_dict):
         ld_dict = cPickle.load(f)
         f.close()
     
+##################### using hfile as prior #######################
+    print 'Starting calculation using h2 files as priors'
     print 'Loading prior information from file: %s'%p_dict['hfile']
     with open(p_dict['hfile']) as f:
         data = f.readlines()
@@ -564,7 +568,7 @@ def main(p_dict):
     H2_D1 = sp.sum(prf_h2_D1)
     H2_D2 = sp.sum(prf_h2_D2)
 
-    pleiopred_genomewide(p_dict['coord_D1'], p_dict['coord_D2'], p_dict['rho'], p_dict['alpha'], p_dict['init_PV'], init_betas_prefix=p_dict['init_betas'], out_file_prefix=p_dict['out'], ld_radius=p_dict['ld_radius'], ld_dict = ld_dict, n1=p_dict['N1'], n2=p_dict['N2'], PRF = prf, num_iter=p_dict['num_iter'], burn_in=p_dict['burn_in'], zero_jump_prob=p_dict['zero_jump_prob'], user_h1=p_dict['user_h1'], user_h2=p_dict['user_h2'])
+    pleiopred_genomewide(p_dict['coord_D1'], p_dict['coord_D2'], p_dict['alpha'], p_dict['init_PV'], init_betas_prefix=p_dict['init_betas'], out_file_prefix=p_dict['out'], ld_radius=p_dict['ld_radius'], ld_dict = ld_dict, n1=p_dict['N1'], n2=p_dict['N2'], PRF = prf, num_iter=p_dict['num_iter'], burn_in=p_dict['burn_in'], zero_jump_prob=p_dict['zero_jump_prob'], user_h1=p_dict['user_h1'], user_h2=p_dict['user_h2'])
 
            
  
