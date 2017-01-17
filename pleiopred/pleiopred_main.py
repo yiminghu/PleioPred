@@ -30,7 +30,7 @@ from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, \
     FileTransferSpeed, FormatLabel, Percentage, \
     ProgressBar, ReverseBar, RotatingMarker, \
     SimpleProgress, Timer
-import post_betas
+from pleiopred import post_betas
 
 chromosomes_list = ['chrom_%d'%(x) for x in range(1,23)]
 chromosomes_list.append('chrom_X')
