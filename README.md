@@ -11,6 +11,15 @@ The software is developed and tested in Linux. You will need Python 2.7 and seve
 * scipy
 * numpy
 
+To install these packages, you can conveniently use **pip**. For example,
+```
+pip install h5py
+```
+or 
+```
+pip install --user h5py
+```
+
 Besides these, you also need to have [LDSC](https://github.com/bulik/ldsc) installed (LDSC itself also has a list of prerequisites, please make sure they are also installed). If you only want to use your own heritability estimation for each SNP, you can skip this.
 
 ## Input Data
@@ -22,7 +31,7 @@ Besides these, you also need to have [LDSC](https://github.com/bulik/ldsc) insta
 ```
 git clone https://github.com/yiminghu/PleioPred.git
 ```
-2) Download reference data
+2) Download annotation data
 ```
 cd PleioPred
 wget http://genocanyon.med.yale.edu/AnnoPredFiles/AnnoPred_ref.tar.gz
@@ -56,7 +65,7 @@ Keep in mind that this will generate intermediate data at /.../temp/. Contents i
 The example command parameters mean:
 * --sumstats_D1=GWAS_sumstats1.txt: GWAS summary statistics of D1, with seven fields: hg19chrc, snpid, a1, a2, bp, or and p. test_data/GWAS_sumstats.txt is a subset of DIAGRAM summary statistics. We thank DIAGRAM consortium for making the data publicly available. The oringinal download link is http://diagram-consortium.org/downloads.html
 * --sumstats_D2=GWAS_sumstats2.txt: GWAS summary statistics of D2, same format as D1
-* --ref_gt=validation: path to the reference genotype data. We suggest also using validation data as reference data. Plink binary format (.bed, .bim, .fam), description can be * found in .
+* --ref_gt=validation: path to the reference panel. In practice when validation data is available, we suggest also using genotypes of validation data as the reference panel for LD estimation. Otherwise a reference panel, such 1000 Genome European cohort, is required.  Plink binary format (.bed, .bim, .fam).
 * --val_gt=validation: path to the validation genotype data. Plink binary format, the sixth column in fam file cannot be missing.
 * --N_case1=12171: number of cases in GWAS of D1
 * --N_ctrl1=56862: number of controls in GWAS of D1
