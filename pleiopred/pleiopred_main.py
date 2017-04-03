@@ -512,7 +512,7 @@ def main(p_dict):
             snps1 = sp.array((raw_snps1 - snp_means1)/snp_stds1,dtype='float32')
             assert snps1.shape==raw_snps1.shape, 'Array Shape mismatch'
             chrom_snps1[chrom_str] = snps1
-            ret_dict1 = get_LDpred_ld_tables(snps1, ld_radius=p_dict['ld_radius'], ld_window_size=2*p_dict['ld_radius'])
+            ret_dict1 = get_ld_tables(snps1, ld_radius=p_dict['ld_radius'], ld_window_size=2*p_dict['ld_radius'])
             chrom_ld_dict1[chrom_str] = ret_dict1['ld_dict']
             chrom_ref_ld_mats1[chrom_str] = ret_dict1['ref_ld_matrices']
             ld_scores1 = ret_dict1['ld_scores']
