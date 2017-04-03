@@ -1,0 +1,1 @@
+Directory used for storing files generated during the process. You can set your own temp dir by option "--temp_dir=temp".
