@@ -2,7 +2,7 @@
 Leveraging pleiotropy and functional annotations in genetic risk prediction
 
 ## Introduction
-This tool predicts disease risk from genotype data using large GWAS summary statistics of genetically correlated diseases as training data and integrating functional annotations.
+This tool predicts disease risk from genotype data using large GWAS summary statistics of genetically correlated diseases as training data and integrating functional annotations. The manuscript is now published in PLOS Genetics (http://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1006836).
 
 ## Prerequisites
 The software is developed and tested in Linux. You will need Python 2.7 and several pacakges to run it:
