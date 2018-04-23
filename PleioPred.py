@@ -27,24 +27,15 @@ def get_argparser():
 
   ## Parameters
   # For LDSC
-  parser.add_argument('--N_case1', required=True, type=int,
-                      help="Number of cases in GWAS training of D1, for LDSC")
-  parser.add_argument('--N_ctrl1', required=True, type=int,
-                      help="Number of ctrls in GWAS training of D1, for LDSC")
-
-  parser.add_argument('--N_case2', required=True, type=int,
-                      help="Number of cases in GWAS training of D2, for LDSC")
-  parser.add_argument('--N_ctrl2', required=True, type=int,
-                      help="Number of ctrls in GWAS training of D2, for LDSC")
   ## Temporary file output directory
   parser.add_argument('--temp_dir', default=".",
                       help="Directory to output all temporary files."
                            " If not specified, will use the current directory.") 
   ## Parameters
-#  parser.add_argument('--N1', required=True, type=int,
-#                      help="Sample size of the first disease GWAS")
-#  parser.add_argument('--N2', required=True, type=int,
-#                      help="Sample size of the second disease GWAS")
+  parser.add_argument('--N1', required=True, type=int,
+                      help="Sample size of the first disease GWAS")
+  parser.add_argument('--N2', required=True, type=int,
+                      help="Sample size of the second disease GWAS")
   parser.add_argument('--rho', type=float,
                       help="Tuning parameter in (-1,1)"
                            ", the genetic correlation between diseases")
