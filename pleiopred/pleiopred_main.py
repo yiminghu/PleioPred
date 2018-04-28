@@ -124,7 +124,7 @@ pleiopred_genomewide(data_file_D1, data_file_D2, rho, ld_radius = None, ld_dict=
 
 def pleiopred_genomewide(data_file_D1, data_file_D2, alpha, Pi, init_betas_prefix, ld_radius = None, ld_dict=None, out_file_prefix=None, n1=None, n2=None, PRF=None, num_iter=60, burn_in=10, zero_jump_prob=0.05, user_h1=None, user_h2=None):
     """
-    Calculate LDpred for a genome
+    Calculate PleioPred for a genome
     """    
     prf_chr = PRF['chrom']
     prf_sids = PRF['sids']
