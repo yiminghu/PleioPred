@@ -187,7 +187,7 @@ def pleiopred_genomewide(data_file_D1, data_file_D2, alpha, Pi, init_betas_prefi
         gw_h2_ld_score_est1 = max(0.0001, (max(1, chi_square_lambda1) - 1) / (n1 * (L1 / num_snps1)))
         print 'Estimated genome-wide heritability of D1:', gw_h2_ld_score_est1
         
-        assert chi_square_lambda1>1, 'Something is wrong with the GWAS summary statistics of D1.  Perhaps there were issues parsing of them, or the given GWAS sample size (N) was too small. Either way, lambda (the mean Chi-square statistic) is too small.  '
+        #assert chi_square_lambda1>1, 'Something is wrong with the GWAS summary statistics of D1.  Perhaps there were issues parsing of them, or the given GWAS sample size (N) was too small. Either way, lambda (the mean Chi-square statistic) is too small.  '
     
         L2 = ld_scores_dict['avg_gw_ld_score']
         chi_square_lambda2 = sp.mean(n2 * sum_beta2s2 / float(num_snps2))
@@ -196,7 +196,7 @@ def pleiopred_genomewide(data_file_D1, data_file_D2, alpha, Pi, init_betas_prefi
         gw_h2_ld_score_est2 = max(0.0001, (max(1, chi_square_lambda2) - 1) / (n2 * (L2 / num_snps2)))
         print 'Estimated genome-wide heritability of D2:', gw_h2_ld_score_est2
         
-        assert chi_square_lambda2>1, 'Something is wrong with the GWAS summary statistics of D2.  Perhaps there were issues parsing of them, or the given GWAS sample size (N) was too small. Either way, lambda (the mean Chi-square statistic) is too small.  '
+        #assert chi_square_lambda2>1, 'Something is wrong with the GWAS summary statistics of D2.  Perhaps there were issues parsing of them, or the given GWAS sample size (N) was too small. Either way, lambda (the mean Chi-square statistic) is too small.  '
     else:
         gw_h2_ld_score_est1 = user_h1
         gw_h2_ld_score_est2 = user_h2
