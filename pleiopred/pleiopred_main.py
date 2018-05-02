@@ -322,6 +322,7 @@ def pleiopred_genomewide(data_file_D1, data_file_D2, alpha, Pi, init_betas_prefi
         A4 = 0    
         for chrom_str in chromosomes_list:
             if chrom_str in chr_list:
+                n_snps_chrom = len(chrom_snpids[chrom_str])
                 posterior_betas = post_betas.bi_mcmc_all_chr(
                     chrom_betas1[chrom_str],
                     chrom_betas2[chrom_str], 
