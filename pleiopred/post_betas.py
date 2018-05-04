@@ -90,10 +90,10 @@ def bi_mcmc_all_chr(beta_hats1, beta_hats2, Pi, pr_sig1, pr_sig2, zj_p, start_be
             CR1 = 1.0/(n1*v1+1.0)
             CR2 = 1.0/(n2*v2+1.0)
 
-            w11 = Pi[0]*sp.sqrt(CR1*CR2)
-            w10 = Pi[1]*sp.sqrt(CR1)*sp.exp(-NC2*num2**2/2.0)
-            w01 = Pi[2]*sp.sqrt(CR2)*sp.exp(-NC1*num1**2/2.0)
-            w00 = Pi[3]*sp.exp(-NC2*num2**2/2.0-NC1*num1**2/2.0)
+            w11 = Pi[0]*np.exp((np.log(CR1) + np.log(CR2))/2.0 + NC2*num2**2/2.0 + NC1*num1**2/2.0)
+            w10 = Pi[1]*np.exp(np.log(CR1)/2.0 + NC1*num1**2/2.0)
+            w01 = Pi[2]*np.exp(np.log(CR2)/2.0 + NC2*num2**2/2.0)
+            w00 = Pi[3]
             wsum = w11 + w10 + w01 + w00
 #            postP = [w11/wsum,(w11+w10)/wsum,(w11+w10+w01)/wsum]
 #            outP = sp.array([w11,w10,w01,w00])/wsum
