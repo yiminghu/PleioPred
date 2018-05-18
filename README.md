@@ -35,10 +35,14 @@ git clone https://github.com/yiminghu/PleioPred.git
 2) Download annotation data
 ```
 cd PleioPred
-wget http://genocanyon.med.yale.edu/AnnoPredFiles/AnnoPred_ref.tar.gz
-tar -zxvf AnnoPred_ref.tar.gz
+wget http://genocanyon.med.yale.edu/AnnoPredFiles/AnnoPred_ref1.0.tar.gz
+tar -zxvf AnnoPred_ref1.0.tar.gz
 ```
-This step will generated a folder named ref containing functional annotations.
+This step will generated a folder named ref containing functional annotations, which now contain four tiers of annotations:
+* tier0: baseline + GenoCanyon + GenoSkyline (Brain, GI, Lung, Heart, Blood, Muscle, Epithelial)
+* tier1: baseline + GenoCanyon
+* tier2: baseline + GenoCanyon + 7 GenoSkylinePlus (Immune, Brain, CV, Muscle, GI, Epithelial)
+* tier3: baseline + GenoCanyon + GenoSkylinePlus (66 Roadmap cell type specific functional annotations)
 
 3) Setup LDSC: open LDSC.config and change /absolute/path/to/ldsc to the absolute path to LDSC in your local directory. Instruction on installing LDSC can be found at https://github.com/bulik/ldsc.
 

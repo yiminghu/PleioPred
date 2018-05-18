@@ -27,15 +27,19 @@ def get_argparser():
 
   ## Parameters
   # For LDSC
-  parser.add_argument('--N_case1', required=True, type=int,
-                      help="Number of cases in GWAS training of D1, for LDSC")
-  parser.add_argument('--N_ctrl1', required=True, type=int,
-                      help="Number of ctrls in GWAS training of D1, for LDSC")
+  parser.add_argument('--N1', required=True, type=int,
+                      help="Sample size of GWAS 1, for LDSC")
+#  parser.add_argument('--N_case1', required=True, type=int,
+#                      help="Number of cases in GWAS training of D1, for LDSC")
+#  parser.add_argument('--N_ctrl1', required=True, type=int,
+#                      help="Number of ctrls in GWAS training of D1, for LDSC")
 
-  parser.add_argument('--N_case2', required=True, type=int,
-                      help="Number of cases in GWAS training of D2, for LDSC")
-  parser.add_argument('--N_ctrl2', required=True, type=int,
-                      help="Number of ctrls in GWAS training of D2, for LDSC")
+  parser.add_argument('--N2', required=True, type=int,
+                      help="Sample size of GWAS 2, for LDSC")
+#  parser.add_argument('--N_case2', required=True, type=int,
+#                      help="Number of cases in GWAS training of D2, for LDSC")
+#  parser.add_argument('--N_ctrl2', required=True, type=int,
+#                      help="Number of ctrls in GWAS training of D2, for LDSC")
   ## Temporary file output directory
   parser.add_argument('--temp_dir', default=".",
                       help="Directory to output all temporary files."
@@ -120,12 +124,14 @@ def process_args(args):
 
   pdict['coord_D1'] = args.coord_D1
   pdict['coord_D2'] = args.coord_D2
-  pdict['N_case1'] = args.N_case1
-  pdict['N_case2'] = args.N_case2
-  pdict['N_ctrl1'] = args.N_ctrl1
-  pdict['N_ctrl2'] = args.N_ctrl2
-  pdict['N1'] = pdict['N_case1'] + pdict['N_ctrl1']
-  pdict['N2'] = pdict['N_case2'] + pdict['N_ctrl2']
+  pdict['N1'] = args.N1
+  pdict['N2'] = args.N2
+#  pdict['N_case1'] = args.N_case1
+#  pdict['N_case2'] = args.N_case2
+#  pdict['N_ctrl1'] = args.N_ctrl1
+#  pdict['N_ctrl2'] = args.N_ctrl2
+#  pdict['N1'] = pdict['N_case1'] + pdict['N_ctrl1']
+#  pdict['N2'] = pdict['N_case2'] + pdict['N_ctrl2']
 
 
   if (args.rho is not None):
