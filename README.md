@@ -54,10 +54,8 @@ python PleioPred.py\
   --sumstats_D2=test_data/GWAS_sumstats2.txt\
   --ref_gt=test_data/test\
   --val_gt=test_data/test\
-  --N_case1=12171\
-  --N_ctrl1=56862\
-  --N_case2=22233\
-  --N_ctrl2=64762\
+  --N1=69033\
+  --N2=86995\
   --temp_dir=temp/\
   --local_ld_prefix=temp/test\
   --coord_D1=temp/coord1\
@@ -72,10 +70,8 @@ The example command parameters mean:
 * --sumstats_D2=test_data/GWAS_sumstats2.txt: GWAS summary statistics of D2, same format as D1
 * --ref_gt=test_data/test: path to the reference panel. In practice when validation data is available, we suggest also using genotypes of validation data as the reference panel for LD estimation (as what we did in this demonstration). Otherwise a reference panel, such 1000 Genome European cohort, is required.  Plink binary format (.bed, .bim, .fam).
 * --val_gt=test_data/test: path to the validation genotype data. Plink binary format, the sixth column in fam file cannot be missing.
-* --N_case1=12171: number of cases in GWAS of D1
-* --N_ctrl1=56862: number of controls in GWAS of D1
-* --N_case2=22233: number of cases in GWAS of D2
-* --N_ctrl2=64762: number of controls in GWAS of D2
+* --N1=69033: sample size of GWAS 1
+* --N2=86995: sample size of GWAS 2
 * --temp_dir=temp/: a path for saving temporary files generated during the procedure. We suggest using different temp_dir for different dataset.
 * --local_ld_prefix=temp/test: a path for saving a cPickle file, which contains LD matrix
 * --coord_D1=temp/coord1: path for saving a h5py file of D1, which contains validation genotypes, summary statistics and standardized effect sizes of SNPs in common.

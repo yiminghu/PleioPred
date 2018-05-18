@@ -15,7 +15,7 @@ from sys import exit
 import numpy as np
 
 
-def generate_prior_bi(h5py_file1, h5py_file2, LDSC_results_file1, LDSC_results_file2, output_anno_h2, output_ld_h2):
+def generate_prior_bi(h5py_file1, h5py_file2, LDSC_results_file1, LDSC_results_file2, output_anno_h2, output_ld_h2, ):
     ### load the fixed input file ###
     ## Note: gonna take huge memory!!! Probably need to optimize this part, for example, read in .gz files directly ##
     # h5py_file1 = pdict['h5py_file1']
@@ -24,10 +24,33 @@ def generate_prior_bi(h5py_file1, h5py_file2, LDSC_results_file1, LDSC_results_f
     # LDSC_results_file2 = pdict['LDSC_results_file2']
     # output_anno_h2 = pdict['output_anno_h2']
     # output_ld_h2 = pdict['output_ld_h2']
-
-    h5f1 = h5py.File('ref/Misc/GC1_GS7_Baseline53.h5','r')
-    annot = h5f1['annot'][:]
+    h5f1 = h5py.File('ref/AnnotMatrix/baseline.h5','r')
+    baseline = h5f1['annot'][:]
     h5f1.close()
+
+    if annotation_flag=='tier0':
+        h5f1 = h5py.File('ref/AnnotMatrix/tier0.h5','r')
+        tier = h5f1['annot'][:]
+        h5f1.close()
+    elif annotation_flag=='tier1':
+        h5f1 = h5py.File('ref/AnnotMatrix/tier1.h5','r')
+        tier = h5f1['annot'][:]
+        h5f1.close()
+    elif annotation_flag=='tier2':
+        h5f1 = h5py.File('ref/AnnotMatrix/tier2.h5','r')
+        tier = h5f1['annot'][:]
+        h5f1.close()
+    elif annotation_flag=='tier3':
+        h5f1 = h5py.File('ref/AnnotMatrix/tier3.h5','r')
+        tier = h5f1['annot'][:]
+        h5f1.close()
+    else:
+        exit("Illegal tier name!")
+    annot = np.concatenate((baseline,tier),axis=1)
+
+#    h5f1 = h5py.File('ref/Misc/GC1_GS7_Baseline53.h5','r')
+#    annot = h5f1['annot'][:]
+#    h5f1.close()
     h5f2 = h5py.File('ref/Misc/1000G_SNP_info.h5','r')
     snp_chr = h5f2['snp_chr'][:]
     h5f2.close()

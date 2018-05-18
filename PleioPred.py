@@ -40,6 +40,8 @@ def get_argparser():
 #                      help="Number of cases in GWAS training of D2, for LDSC")
 #  parser.add_argument('--N_ctrl2', required=True, type=int,
 #                      help="Number of ctrls in GWAS training of D2, for LDSC")
+  parser.add_argument('--annotation_flag', required=True,
+                        help="Annotation flag: Tier0, Tier1, Tier2 and Tier3")
   ## Temporary file output directory
   parser.add_argument('--temp_dir', default=".",
                       help="Directory to output all temporary files."
@@ -126,6 +128,7 @@ def process_args(args):
   pdict['coord_D2'] = args.coord_D2
   pdict['N1'] = args.N1
   pdict['N2'] = args.N2
+  pdict['annotation_flag'] = args.annotation_flag
 #  pdict['N_case1'] = args.N_case1
 #  pdict['N_case2'] = args.N_case2
 #  pdict['N_ctrl1'] = args.N_ctrl1
@@ -255,28 +258,29 @@ def main(pdict):
   else:
     print 'Coord file for D2 already exists! Continue calculating priors...'
 
-  ldsc_result1 = tmp(pdict,'ldsc1.results')
-  ldsc_result2 = tmp(pdict,'ldsc2.results')
-  if not isfile(ldsc_result1):
+  ldsc_result = tmp(pdict, pdict['annotation_flag'])
+  #ldsc_result1 = tmp(pdict,'ldsc1.results')
+  #ldsc_result2 = tmp(pdict,'ldsc2.results')
+  if not isfile(ldsc_result+'_ldsc1.results'):
     LD_PyWrapper.callLDSC(
-        org_sumstats1, pdict['N_case1'], pdict['N_ctrl1'], tmp(pdict,'ldsc1'))
+        org_sumstats1, pdict['N1'], ldsc_result+'_ldsc1', pdict['annotation_flag'])
   else:
     print 'LDSC results for D1 found! Continue calculating priors ...'
 
-  if not isfile(ldsc_result2):
+  if not isfile(ldsc_result+'_ldsc2.results'):
     LD_PyWrapper.callLDSC(
-        org_sumstats2, pdict['N_case2'], pdict['N_ctrl2'], tmp(pdict,'ldsc2'))
+        org_sumstats2, pdict['N2'], ldsc_result+'_ldsc2', pdict['annotation_flag'])
   else:
     print 'LDSC results for D2 found! Continue calculating priors ...'
 
-  pdict['h2_anno'] = tmp(pdict, "h2_anno.txt")
+  pdict['h2_anno'] = tmp(pdict, pdict['annotation_flag']+"_h2_anno.txt")
   pdict['h2_ld'] = tmp(pdict, "h2_ld.txt")
   pdict['init_betas_anno'] = tmp(pdict, "init_betas_anno")
   pdict['init_betas_ld'] = tmp(pdict, "init_betas_ld")
   ld_r = PleioPriors.generate_prior_bi(
            pdict['coord_D1'], pdict['coord_D2'], 
-           ldsc_result1, ldsc_result2,
-           pdict['h2_anno'], pdict['h2_ld'])
+           ldsc_result+'_ldsc1.results', ldsc_result+'_ldsc2.results',
+           pdict['h2_anno'], pdict['h2_ld'], pdict['annotation_flag'])
   if pdict['ld_radius'] is None: 
     pdict['ld_radius'] = int(ld_r)
   print 'Starting PleioPred with annotations'
