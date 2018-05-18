@@ -56,6 +56,7 @@ python PleioPred.py\
   --val_gt=test_data/test\
   --N1=69033\
   --N2=86995\
+  --annotation_flag="tier0"\
   --temp_dir=temp/\
   --local_ld_prefix=temp/test\
   --coord_D1=temp/coord1\
