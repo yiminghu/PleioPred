@@ -1,4 +1,6 @@
 # PleioPred
+**Notice-07-11-2018**: current master branch was switched to some old (but slow) version, new version with high speed coming soon.
+
 Leveraging pleiotropy and functional annotations in genetic risk prediction
 
 ## Introduction
